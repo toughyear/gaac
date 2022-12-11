@@ -57,6 +57,13 @@ const Meta = (props: IMetaProps) => {
           url: props.canonical,
           locale: AppConfig.locale,
           site_name: AppConfig.site_name,
+          images: [
+            {
+              url: 'https://raw.githubusercontent.com/toughyear/blog-uploads/main/uploads/gaac/landing.png',
+              alt: 'Gaac: use Github as a CDN',
+              type: 'image/png',
+            },
+          ],
         }}
       />
     </>
