@@ -6,6 +6,13 @@
 ### How to use
 Visit [gaac.vercel.app](https://gaac.vercel.app) and follow the instructions to get started.
 
+### Connect
+You can connect your GitHub account by clicking on the `Connect` button on the homepage.
+![Connect](https://raw.githubusercontent.com/toughyear/blog-uploads/main/uploads/gaac/connect.png)
+
+### Upload
+You can upload files by the file uploader on the homepage. You can also drag and drop files to upload or paste from the clipboard. All files are uploaded to the `/upload` directory in your public repository.
+
 ### Searching
 You can search for uploaded files using the UI -
 ![Search In Gaac](https://raw.githubusercontent.com/toughyear/blog-uploads/main/uploads/gaac/uploads.png)
