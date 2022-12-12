@@ -22,6 +22,10 @@ const Meta = (props: IMetaProps) => {
           content="width=device-width,initial-scale=1"
           key="viewport"
         />
+        <meta
+          property="og:image"
+          content="https://raw.githubusercontent.com/toughyear/blog-uploads/main/uploads/gaac/landing.png"
+        />
         <link
           rel="apple-touch-icon"
           href={`${router.basePath}/apple-touch-icon.png`}
@@ -57,13 +61,6 @@ const Meta = (props: IMetaProps) => {
           url: props.canonical,
           locale: AppConfig.locale,
           site_name: AppConfig.site_name,
-          images: [
-            {
-              url: 'https://raw.githubusercontent.com/toughyear/blog-uploads/main/uploads/gaac/landing.png',
-              alt: 'Gaac: use Github as a CDN',
-              type: 'image/png',
-            },
-          ],
         }}
       />
     </>
