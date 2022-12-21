@@ -3,21 +3,15 @@ import {
   BoltIcon,
   CommandLineIcon,
 } from '@heroicons/react/24/solid';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ConnectGithubButton from '@/components/ConnectGithubButton';
 import FileUploader from '@/components/FileUploader';
 import RepoConnectorButton from '@/components/RepoConnectorButton';
-import UserContext from '@/contexts/authContext';
-import useRepoAccess from '@/hooks/useRepoAccess';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
 
 const Index = () => {
-  const user = useContext(UserContext);
-
-  const repos = useRepoAccess();
-
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
     setHydrated(true);
