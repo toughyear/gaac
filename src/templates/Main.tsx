@@ -10,7 +10,7 @@ import type { ReactNode } from 'react';
 import { Fragment, useContext } from 'react';
 
 import ConnectGithubButton from '@/components/ConnectGithubButton';
-import RepoConnector from '@/components/RepoConnector';
+import RepoConnector from '@/components/RepoConnectorNavbar';
 import UserContext from '@/contexts/authContext';
 import { AppConfig } from '@/utils/AppConfig';
 
@@ -63,7 +63,7 @@ const Main = (props: IMainProps) => {
               </div>
               <Link
                 href="/uploads"
-                className="order-last text-base font-medium text-gray-500 hover:text-gray-900 md:order-none"
+                className="order-last text-base font-medium text-gray-700 hover:text-gray-900 md:order-none"
               >
                 Search Uploads
               </Link>

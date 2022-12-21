@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import UserContext from '@/contexts/authContext';
 import useRepoAccess from '@/hooks/useRepoAccess';
 
-const RepoConnector = () => {
+const RepoConnectorNavbar = () => {
   // Use the custom hook to check if the user has access to any repos
   const repos = useRepoAccess();
   const user = useContext(UserContext);
@@ -17,7 +17,7 @@ const RepoConnector = () => {
         onClick={(e) => e.stopPropagation()}
         rel="noreferrer"
       >
-        [Connect to a Public Repo]
+        [Connect to a Github Repo]
       </a>
     );
   }
@@ -26,4 +26,4 @@ const RepoConnector = () => {
   return <span>{(repos[0] as any).name}</span>;
 };
 
-export default RepoConnector;
+export default RepoConnectorNavbar;
