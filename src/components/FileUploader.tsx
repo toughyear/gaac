@@ -48,8 +48,36 @@ const FileUploader = () => {
     };
   };
 
+  const hasAllPermissions = () => {
+    // if no user is logged in, toast an error
+    if (!localStorage.getItem('gaacOAuthToken')) {
+      toast.error('Please login first');
+      return false;
+    }
+
+    // if no repo is selected, toast an error
+    if (!repo) {
+      toast.error('Please select a repo first');
+      return false;
+    }
+
+    // if no image is selected, toast an error
+    if (!image) {
+      toast.error('Please select an image first');
+      return false;
+    }
+
+    return true;
+  };
+
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+
+    // Validate permissions
+    if (!hasAllPermissions()) {
+      return;
+    }
+
     setUploadInProgress(true);
 
     // Get the dropped files
@@ -61,6 +89,11 @@ const FileUploader = () => {
 
   const handleClick = () => {
     if (typeof window === 'undefined') {
+      return;
+    }
+
+    // Validate permissions
+    if (!hasAllPermissions()) {
       return;
     }
 
@@ -78,6 +111,12 @@ const FileUploader = () => {
   const handlePaste = (e: ClipboardEvent) => {
     // Prevent the default paste behavior
     e.preventDefault();
+
+    // Validate permissions
+    if (!hasAllPermissions()) {
+      return;
+    }
+
     setUploadInProgress(true);
 
     // Get the clipboard data
