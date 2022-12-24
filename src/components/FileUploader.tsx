@@ -13,6 +13,9 @@ const FileUploader = () => {
   // store file type
   const [fileType, setFileType] = useState<string | null>(null);
 
+  // store if overwriting file is allowed
+  const [allowOverwrite, setAllowOverwrite] = useState(true);
+
   // store commit in progress state
   const [commitInProgress, setCommitInProgress] = useState(false);
   // store file upload progress state
@@ -58,12 +61,6 @@ const FileUploader = () => {
     // if no repo is selected, toast an error
     if (!repo) {
       toast.error('Please select a repo first');
-      return false;
-    }
-
-    // if no image is selected, toast an error
-    if (!image) {
-      toast.error('Please select an image first');
       return false;
     }
 
@@ -130,7 +127,7 @@ const FileUploader = () => {
     setUploadInProgress(false);
   };
 
-  const handleCommitToGithub = async () => {
+  const handleCommitToGitHub = async () => {
     if (typeof window === 'undefined') {
       return;
     }
@@ -139,45 +136,102 @@ const FileUploader = () => {
 
     const accessToken = localStorage.getItem('gaacOAuthToken');
     const repoFullName = repo?.full_name;
+    const commitMessage = `Uploaded ${imageName} via GAAC`;
+    const committer = {
+      name: 'GaaCBot',
+      email: 'noreply@gaac.vercel.app',
+    };
 
-    const response = await fetch(
-      `https://api.github.com/repos/${repoFullName}/contents/uploads/${imageName}`,
-      {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          Accept: 'application/vnd.github+json',
-        },
-        body: JSON.stringify({
-          message: `Uploaded ${imageName} via GAAC`,
-          content: image,
-          committer: {
-            name: 'GaaCBot',
-            email: 'noreply@gaac.vercel.app',
-          },
-        }),
+    try {
+      let fileSha: string | undefined;
+
+      let uploadedContentUrl: string | undefined;
+
+      const requestUrl = `https://api.github.com/repos/${repoFullName}/contents/uploads/${imageName}`;
+      let requestMethod = 'PUT';
+      const requestHeaders = {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: 'application/vnd.github+json',
+      };
+      let requestBody = {
+        message: commitMessage,
+        content: image,
+        committer,
+        sha: fileSha,
+      };
+
+      const responseWithoutSha = await fetch(requestUrl, {
+        method: requestMethod,
+        headers: requestHeaders,
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!responseWithoutSha.ok && responseWithoutSha.status !== 422) {
+        const error = await responseWithoutSha.json();
+        throw new Error(error.message);
       }
-    );
 
-    // If the response is not ok, toast the error
-    if (!response.ok) {
-      const error = await response.json();
-      toast.error(error.message);
-      setCommitInProgress(false);
-      return;
-    }
+      if (responseWithoutSha.status === 422) {
+        // File already exists, so retrieve the SHA and try to overwrite it
+        if (!allowOverwrite) {
+          throw new Error(
+            'File already exists. Please enable overwrite to replace the file.'
+          );
+        }
 
-    const data = await response.json();
+        // get the file sha by making a GET request
+        const responseForSha = await fetch(requestUrl, {
+          method: 'GET',
+          headers: requestHeaders,
+        });
 
-    // if successful, copy the url to the clipboard
-    if (data.content) {
-      const url = data.content.download_url;
+        if (!responseForSha.ok) {
+          const error = await responseForSha.json();
+          throw new Error(error.message);
+        }
+
+        const data = await responseForSha.json();
+        fileSha = data.sha;
+
+        requestMethod = 'PUT';
+        requestBody = {
+          message: commitMessage,
+          content: image,
+          committer,
+          sha: fileSha,
+        };
+
+        const responseWithSha = await fetch(requestUrl, {
+          method: requestMethod,
+          headers: requestHeaders,
+          body: JSON.stringify(requestBody),
+        });
+
+        if (!responseWithSha.ok) {
+          const error = await responseWithSha.json();
+          throw new Error(error.message);
+        }
+
+        const dataWithSha = await responseWithSha.json();
+
+        uploadedContentUrl = dataWithSha.content.download_url;
+      }
+
+      // if ok, get the download url
+
+      if (responseWithoutSha.ok && !uploadedContentUrl) {
+        const data = await responseWithoutSha.json();
+        uploadedContentUrl = data.content.download_url;
+      }
+
       // copy to clipboard
-      navigator.clipboard.writeText(url);
+      navigator.clipboard.writeText(uploadedContentUrl as string);
 
       // create a toast
       toast.success(
-        'Image uploaded successfully! Link copied to your clipboard.',
+        `File ${
+          responseWithoutSha.ok ? 'uploaded' : 'updated'
+        } successfully. Link copied to clipboard.`,
         {
           theme: 'light',
           position: 'top-right',
@@ -188,9 +242,14 @@ const FileUploader = () => {
       setImage(null);
       setImageName(null);
       setFileType(null);
+    } catch (error) {
+      toast.error((error as any).message, {
+        theme: 'light',
+        position: 'top-right',
+      });
+    } finally {
+      setCommitInProgress(false);
     }
-
-    setCommitInProgress(false);
   };
 
   // useEffect hook to set a listener on the document for the paste event
@@ -251,7 +310,7 @@ const FileUploader = () => {
           />
           <button
             className="flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-            onClick={handleCommitToGithub}
+            onClick={handleCommitToGitHub}
           >
             Upload to Github{' '}
             {commitInProgress && (
@@ -277,6 +336,28 @@ const FileUploader = () => {
               </svg>
             )}
           </button>
+        </div>
+      )}
+      {imageName && (
+        <div className="flex items-start">
+          <div className="flex h-5 items-center">
+            <input
+              id="allow-overwrite"
+              name="allow-overwrite"
+              type="checkbox"
+              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              onChange={(e) => setAllowOverwrite(e.target.checked)}
+              checked={allowOverwrite}
+            />
+          </div>
+          <div
+            className="ml-3 select-none text-sm"
+            onClick={() => setAllowOverwrite(!allowOverwrite)}
+          >
+            <label className="font-medium text-gray-700">
+              overwrite file if exists
+            </label>
+          </div>
         </div>
       )}
       {/* this component will show the uploaded image */}

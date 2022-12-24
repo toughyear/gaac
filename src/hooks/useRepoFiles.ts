@@ -16,6 +16,7 @@ export type GithubFile = {
 
 const useRepoFiles = (path: string) => {
   const [files, setFiles] = useState<Array<GithubFile>>([]);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const repo = useSelectedRepo();
 
@@ -40,9 +41,14 @@ const useRepoFiles = (path: string) => {
     if (repo) {
       fetchFiles();
     }
-  }, [repo, path]);
+  }, [repo, path, refreshTrigger]);
 
-  return files;
+  // this function can be called from another component to trigger the fetch
+  const refreshFiles = () => {
+    setRefreshTrigger((prevTrigger) => prevTrigger + 1);
+  };
+
+  return { files, refreshFiles };
 };
 
 export default useRepoFiles;

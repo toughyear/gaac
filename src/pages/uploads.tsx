@@ -1,3 +1,4 @@
+import { XCircleIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useContext, useState } from 'react';
@@ -5,6 +6,7 @@ import { toast } from 'react-toastify';
 
 import StatusBox, { Status } from '@/components/StatusBox';
 import UserContext from '@/contexts/authContext';
+import useDeleteGithubFile from '@/hooks/useDeleteGithubFile';
 import type { GithubFile } from '@/hooks/useRepoFiles';
 import useRepoFiles from '@/hooks/useRepoFiles';
 import { Meta } from '@/layouts/Meta';
@@ -33,7 +35,9 @@ function Uploads() {
   const path = searchParams.get('path') || 'uploads';
 
   // Use the path in the hook to fetch the files from the repository
-  const files = useRepoFiles(path);
+  const { files, refreshFiles } = useRepoFiles(path);
+
+  const { deleteInProgress, handleDeleteFromGitHub } = useDeleteGithubFile();
 
   // Get the path parts using the getPathParts function
   const pathParts = getPathParts(path);
@@ -116,11 +120,23 @@ function Uploads() {
                 }
                 return (
                   <p
-                    className="mb-1 bg-slate-100/30"
+                    className={`mb-1  bg-slate-100/30 ${
+                      deleteInProgress &&
+                      hoveredFile?.name === file.name &&
+                      'animate-pulse bg-red-100/30 text-red-400'
+                    }`}
                     key={file.name}
                     onMouseEnter={() => setHoveredFile(file)}
                     onClick={() => copyFileNameToClipboard(file.download_url)}
                   >
+                    <XCircleIcon
+                      className="mr-2 inline-block h-4 w-4 text-gray-500 hover:text-indigo-500"
+                      onClick={async (e) => {
+                        e.stopPropagation();
+                        await handleDeleteFromGitHub(file);
+                        refreshFiles();
+                      }}
+                    />
                     {file.name}
                   </p>
                 );
@@ -131,7 +147,7 @@ function Uploads() {
           </div>
           <div className="flex w-full items-center justify-center md:w-1/2">
             {/* if hovered file ends with .png | .jpg | .jpeg | .gif | .svg, display it */}
-            {hoveredFile?.name.match(/\.(jpeg|jpg|gif|png|svg)$/) && (
+            {hoveredFile?.name.match(/\.(jpeg|jpg|gif|png|svg|webp)$/) && (
               <img
                 src={hoveredFile.download_url}
                 alt={hoveredFile.name}
