@@ -42,6 +42,21 @@ const Main = (props: IMainProps) => {
       href: 'https://github.com/toughyear/gaac',
       icon: AcademicCapIcon,
     },
+    {
+      name: 'Connect',
+      description:
+        'Find me on Twitter, Github, or LinkedIn. I would love to hear from you!',
+      href: 'https://twitter.com/toughyear',
+      icon: () => (
+        <svg
+          viewBox="0 0 20 20"
+          aria-hidden="true"
+          className="ml-2 h-8 w-8 cursor-pointer fill-indigo-500"
+        >
+          <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0 0 20 3.92a8.19 8.19 0 0 1-2.357.646 4.118 4.118 0 0 0 1.804-2.27 8.224 8.224 0 0 1-2.605.996 4.107 4.107 0 0 0-6.993 3.743 11.65 11.65 0 0 1-8.457-4.287 4.106 4.106 0 0 0 1.27 5.477A4.073 4.073 0 0 1 .8 7.713v.052a4.105 4.105 0 0 0 3.292 4.022 4.095 4.095 0 0 1-1.853.07 4.108 4.108 0 0 0 3.834 2.85A8.233 8.233 0 0 1 0 16.407a11.615 11.615 0 0 0 6.29 1.84"></path>
+        </svg>
+      ),
+    },
   ];
 
   return (
@@ -156,9 +171,22 @@ const Main = (props: IMainProps) => {
           </div>
         </Popover>
         <div className="py-5 text-xl">{props.children}</div>
-        <div className="border-t border-gray-300 py-8 text-center text-sm">
+        <div className="flex items-center justify-center border-t border-gray-300 py-8 text-center text-sm">
           MIT License · © {new Date().getFullYear()} · {AppConfig.site_name} -{' '}
-          {AppConfig.title}
+          {AppConfig.title} - Connect on
+          <a
+            href="https://twitter.com/toughyear"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <svg
+              viewBox="0 0 20 20"
+              aria-hidden="true"
+              className="ml-2 h-5 w-5 cursor-pointer fill-slate-400 hover:fill-indigo-500"
+            >
+              <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0 0 20 3.92a8.19 8.19 0 0 1-2.357.646 4.118 4.118 0 0 0 1.804-2.27 8.224 8.224 0 0 1-2.605.996 4.107 4.107 0 0 0-6.993 3.743 11.65 11.65 0 0 1-8.457-4.287 4.106 4.106 0 0 0 1.27 5.477A4.073 4.073 0 0 1 .8 7.713v.052a4.105 4.105 0 0 0 3.292 4.022 4.095 4.095 0 0 1-1.853.07 4.108 4.108 0 0 0 3.834 2.85A8.233 8.233 0 0 1 0 16.407a11.615 11.615 0 0 0 6.29 1.84"></path>
+            </svg>
+          </a>
         </div>
       </div>
     </div>

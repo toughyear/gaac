@@ -105,7 +105,7 @@ function Uploads() {
           <div className="h-24 w-full  cursor-pointer overflow-auto md:h-auto md:w-1/2">
             {files?.map((file) => {
               // Check if the file name matches the search query
-              if (file.name.includes(searchQuery)) {
+              if (file.name.toLowerCase().includes(searchQuery)) {
                 if (file.type === 'dir') {
                   return (
                     <p key={file.name} className="mb-1 bg-slate-200/60">
@@ -151,7 +151,21 @@ function Uploads() {
               <img
                 src={hoveredFile.download_url}
                 alt={hoveredFile.name}
-                className="h-64 cursor-pointer shadow-lg"
+                className="h-64 cursor-pointer border-4 border-indigo-200 shadow-lg"
+                onClick={() => {
+                  // redirect to the file url in a new tab
+                  window.open(hoveredFile.download_url, '_blank');
+                }}
+              />
+            )}
+            {/* if hovered file ends with .mp4 | .webm | .mov, display it */}
+            {hoveredFile?.name.match(/\.(mp4|webm|mov)$/) && (
+              <video
+                src={hoveredFile.download_url}
+                className="h-64 cursor-pointer border-4 border-indigo-200 shadow-lg"
+                controls
+                autoPlay
+                muted
                 onClick={() => {
                   // redirect to the file url in a new tab
                   window.open(hoveredFile.download_url, '_blank');

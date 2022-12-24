@@ -55,7 +55,7 @@ const Index = () => {
         <hr className="my-10" />
         <div>
           <h1 className="bg-gradient-to-r from-indigo-600 via-sky-400 to-indigo-500 bg-clip-text text-3xl font-bold tracking-tight text-transparent">
-            Use GitHub as a CDN
+            A Better Way to Manage Persistent Uploads
           </h1>
           <p className="mt-3 max-w-2xl text-lg tracking-tight text-slate-400">
             Managing images when writing blogs, websites, apps, etc. is a pain.
@@ -106,6 +106,30 @@ const Index = () => {
               </p>
             </li>
           </ul>
+          <h1 className="mt-5 bg-gradient-to-r from-indigo-600 via-sky-400 to-indigo-500 bg-clip-text text-xl font-bold tracking-tight text-transparent">
+            Just Drag & Drop
+          </h1>
+          <p className="mt-3 max-w-2xl text-lg tracking-tight text-slate-400">
+            Drag and drop files to upload. Use slash in filename to create a
+            directory structure.
+          </p>
+          <img
+            src="https://raw.githubusercontent.com/toughyear/blog-uploads/main/uploads/gaac/upload.gif"
+            alt="GaaC Upload Preview"
+            className="h-[500px] rounded-2xl border-4 border-indigo-300 md:mr-4"
+          />
+          <h1 className="mt-5 bg-gradient-to-r from-indigo-600 via-sky-400 to-indigo-500 bg-clip-text text-xl font-bold tracking-tight text-transparent">
+            Search and Preview
+          </h1>
+          <p className="mt-3 max-w-2xl text-lg tracking-tight text-slate-400">
+            You can easily search and preview your files. Preview everything and
+            click to copy the URL.
+          </p>
+          <img
+            src="https://raw.githubusercontent.com/toughyear/blog-uploads/main/uploads/gaac/search.gif"
+            alt="GaaC Upload Preview"
+            className="mt-10 h-[500px] rounded-2xl border-4 border-indigo-300"
+          />
         </div>
       </div>
     </Main>
