@@ -12,10 +12,11 @@ You can connect your GitHub account by clicking on the `Connect` button on the h
 
 ### Upload
 You can upload files by the file uploader on the homepage. You can also drag and drop files to upload or paste from the clipboard. All files are uploaded to the `/upload` directory in your public repository.
+![Upload via Gaac](https://raw.githubusercontent.com/toughyear/blog-uploads/main/uploads/gaac/upload.gif)
 
 ### Searching
 You can search for uploaded files using the UI -
-![Search In Gaac](https://raw.githubusercontent.com/toughyear/blog-uploads/main/uploads/gaac/uploads.png)
+![Search In Gaac](https://raw.githubusercontent.com/toughyear/blog-uploads/main/uploads/gaac/search.gif)
 
 Fun fact, the image above was uploaded using Gaac itself.
 ### Self hosting
