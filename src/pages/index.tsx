@@ -33,6 +33,25 @@ const Index = () => {
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col px-4 sm:px-6 md:flex-row">
           <div className="flex flex-col items-center md:mr-10 md:w-1/2">
+            <a
+              href="https://www.producthunt.com/posts/gaac-github-as-a-cdn?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-gaac&#0045;github&#0045;as&#0045;a&#0045;cdn"
+              target="_blank"
+              rel="noreferrer"
+              className="mb-4 flex flex-col items-center justify-center"
+            >
+              <img
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=372410&theme=light"
+                alt="Gaac&#0058;&#0032;Github&#0032;As&#0032;a&#0032;CDN - Use&#0032;your&#0032;Github&#0032;repo&#0032;as&#0032;a&#0032;drag&#0045;and&#0045;drop&#0032;CDN&#0032;for&#0032;Free | Product Hunt"
+                className="h-[54px] w-[250px]"
+                width="250"
+                height="54"
+              />
+
+              <p className="my-3 text-xl tracking-tight text-slate-400">
+                Say Hi on Product Hunt!{' '}
+                <span className="inline-block animate-bounce">👋</span>
+              </p>
+            </a>
             <img src="/assets/images/mascot.png" alt="GaaC Mascot" />
             <p className="inline bg-gradient-to-r from-indigo-600 via-sky-500 to-indigo-500 bg-clip-text text-xl tracking-tight text-transparent">
               A secure UI layer for uploading files to Github
@@ -46,7 +65,6 @@ const Index = () => {
               Store your images/static files in a public Github repository and
               use them in blogs, websites, apps, etc.
             </p>
-
             <ConnectGithubButton className="my-4 ml-0 self-start" />
             <RepoConnectorButton />
             <FileUploader />
