@@ -259,7 +259,7 @@ const FileUploader = () => {
     return () => {
       document.removeEventListener('paste', handlePaste);
     };
-  }, []);
+  }, [repo]); // update the listener when repo changes
 
   return (
     <div>
