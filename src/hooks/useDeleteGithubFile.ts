@@ -13,6 +13,16 @@ const useDeleteGithubFile = () => {
       return;
     }
 
+    // ask for confirmation
+    // eslint-disable-next-line no-alert
+    const confirm = window.confirm(
+      `Are you sure you want to delete ${file.name}?`,
+    );
+
+    if (!confirm) {
+      return;
+    }
+
     setDeleteInProgress(true);
 
     const accessToken = localStorage.getItem('gaacOAuthToken');

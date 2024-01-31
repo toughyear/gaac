@@ -102,7 +102,7 @@ function Uploads() {
         />
 
         <div className="mt-10 flex flex-wrap text-base text-gray-600">
-          <div className="h-24 w-full  cursor-pointer overflow-auto md:h-auto md:w-1/2">
+          <div className="h-24 max-h-[50vh] w-full cursor-pointer overflow-y-auto md:h-auto md:w-1/2">
             {files?.map((file) => {
               // Check if the file name matches the search query
               if (file.name.toLowerCase().includes(searchQuery)) {
@@ -120,7 +120,7 @@ function Uploads() {
                 }
                 return (
                   <p
-                    className={`mb-1  bg-slate-100/30 ${
+                    className={`ellipsis  mb-1 bg-slate-100/30  ${
                       deleteInProgress &&
                       hoveredFile?.name === file.name &&
                       'animate-pulse bg-red-100/30 text-red-400'
@@ -130,7 +130,7 @@ function Uploads() {
                     onClick={() => copyFileNameToClipboard(file.download_url)}
                   >
                     <XCircleIcon
-                      className="mr-2 inline-block h-4 w-4 text-gray-500 hover:text-indigo-500"
+                      className="mr-2 inline-block size-4 text-gray-500 hover:text-indigo-500"
                       onClick={async (e) => {
                         e.stopPropagation();
                         await handleDeleteFromGitHub(file);
@@ -145,13 +145,15 @@ function Uploads() {
               return null;
             })}
           </div>
-          <div className="flex w-full items-center justify-center md:w-1/2">
+          <div className="flex w-full items-start justify-center md:w-1/2">
             {/* if hovered file ends with .png | .jpg | .jpeg | .gif | .svg, display it */}
-            {hoveredFile?.name.match(/\.(jpeg|jpg|gif|png|svg|webp)$/) && (
+            {hoveredFile?.name
+              .toLowerCase()
+              .match(/\.(jpeg|jpg|gif|png|svg|webp)$/) && (
               <img
                 src={hoveredFile.download_url}
                 alt={hoveredFile.name}
-                className="h-64 cursor-pointer border-4 border-indigo-200 shadow-lg"
+                className="h-auto max-w-full cursor-pointer border-4 border-indigo-200 shadow-lg"
                 onClick={() => {
                   // redirect to the file url in a new tab
                   window.open(hoveredFile.download_url, '_blank');
@@ -159,7 +161,7 @@ function Uploads() {
               />
             )}
             {/* if hovered file ends with .mp4 | .webm | .mov, display it */}
-            {hoveredFile?.name.match(/\.(mp4|webm|mov)$/) && (
+            {hoveredFile?.name.toLowerCase().match(/\.(mp4|webm|mov)$/) && (
               <video
                 src={hoveredFile.download_url}
                 className="h-64 cursor-pointer border-4 border-indigo-200 shadow-lg"
