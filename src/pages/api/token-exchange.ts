@@ -26,7 +26,7 @@ const getAccessToken = async (code: string) => {
 // this function makes a request to the github api and exchanges the code for an access token
 const githubTokenExchanger = async (
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) => {
   const code = req.query.code as string;
   const accessToken = await getAccessToken(code);

@@ -37,7 +37,7 @@ const useRepoAccess = (): Repo[] => {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
-            }
+            },
           )
             .then((response) => response.json())
             .then((repoResult: { repositories: Repo[] }) => {

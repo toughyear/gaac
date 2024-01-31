@@ -31,7 +31,7 @@ const useRepoFiles = (path: string) => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       const data = await response.json();

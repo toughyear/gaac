@@ -57,7 +57,7 @@ function useGitHubOAuthTokenValidity() {
     document.addEventListener(
       'visibilitychange',
       handleVisibilityChange,
-      false
+      false,
     );
 
     return () => {

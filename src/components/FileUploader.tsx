@@ -175,7 +175,7 @@ const FileUploader = () => {
         // File already exists, so retrieve the SHA and try to overwrite it
         if (!allowOverwrite) {
           throw new Error(
-            'File already exists. Please enable overwrite to replace the file.'
+            'File already exists. Please enable overwrite to replace the file.',
           );
         }
 
@@ -235,7 +235,7 @@ const FileUploader = () => {
         {
           theme: 'light',
           position: 'top-right',
-        }
+        },
       );
 
       // reset the state
@@ -315,7 +315,7 @@ const FileUploader = () => {
             Upload to Github{' '}
             {commitInProgress && (
               <svg
-                className="ml-2 h-5 w-5 animate-spin text-white"
+                className="ml-2 size-5 animate-spin text-white"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -345,7 +345,7 @@ const FileUploader = () => {
               id="allow-overwrite"
               name="allow-overwrite"
               type="checkbox"
-              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              className="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
               onChange={(e) => setAllowOverwrite(e.target.checked)}
               checked={allowOverwrite}
             />
